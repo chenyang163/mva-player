@@ -1,0 +1,12 @@
+[package]
+name = "mva-renderer"
+description = "MVA Animation Renderer: Scene → backend-neutral DrawList"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+mva-scene = { path = "../mva-scene" }
+mva-types = { path = "../mva-types" }
+serde.workspace = true
+toml.workspace = true

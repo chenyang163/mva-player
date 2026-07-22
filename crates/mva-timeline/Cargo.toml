@@ -1,0 +1,15 @@
+[package]
+name = "mva-timeline"
+description = "MVA Timeline Engine: data model (Phase 1.1) and pure evaluation — no audio, no GPU, no UI"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+mva-types = { path = "../mva-types" }
+mva-scene = { path = "../mva-scene" }
+serde.workspace = true
+simple-easing = "1"
+
+[dev-dependencies]
+serde_json.workspace = true

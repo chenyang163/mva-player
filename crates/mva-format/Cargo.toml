@@ -1,0 +1,14 @@
+[package]
+name = "mva-format"
+description = "MVA Format Engine: file → Project (loose file loader, Phase 2)"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+mva-core = { path = "../mva-core" }
+mva-types = { path = "../mva-types" }
+mva-timeline = { path = "../mva-timeline" }
+mva-lyrics = { path = "../mva-lyrics" }
+walkdir.workspace = true
+thiserror.workspace = true

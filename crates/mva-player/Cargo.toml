@@ -1,0 +1,19 @@
+[package]
+name = "mva-player"
+description = "MVA Player — binary shell (wiring only, no business logic)"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+mva-core = { path = "../mva-core" }
+mva-audio = { path = "../mva-audio" }
+mva-ui = { path = "../mva-ui" }
+mva-renderer = { path = "../mva-renderer" }
+mva-timeline = { path = "../mva-timeline" }
+mva-scene = { path = "../mva-scene" }
+mva-types = { path = "../mva-types" }
+mva-format = { path = "../mva-format" }
+rodio.workspace = true
+eframe.workspace = true
+egui.workspace = true

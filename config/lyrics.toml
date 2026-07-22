@@ -1,0 +1,14 @@
+# Phase 1 — lyrics.toml
+# Consumed by mva-lyrics and mva-core::config::LyricsConfig
+# Architecture §10 for list of configurable values per Agent.md rule.
+
+[parse]
+# Fallback text encoding if the LRC file is not valid UTF-8.
+# Common alternatives: "gbk" for Chinese, "shift_jis" for Japanese.
+# Phase 1: UTF-8 only; encoding fallback is reserved.
+encoding = "utf-8"
+
+# Global offset adjustment in seconds applied to every parsed lyric line.
+# Positive shifts all lines later; negative shifts them earlier.
+# Corresponds to the LRC [offset:] header but allows user override.
+offset_adjust = 0.0

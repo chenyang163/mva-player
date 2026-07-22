@@ -1,0 +1,11 @@
+[package]
+name = "mva-lyrics"
+description = "MVA Lyrics Parser: LRC → LyricTimeline"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+mva-types = { path = "../mva-types" }
+lrc.workspace = true
+thiserror.workspace = true

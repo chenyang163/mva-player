@@ -1,0 +1,11 @@
+[package]
+name = "mva-audio"
+description = "MVA Audio Engine: rodio transport + PlaybackClock implementation"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+mva-core = { path = "../mva-core" }
+rodio.workspace = true
+thiserror.workspace = true

@@ -1,0 +1,12 @@
+[package]
+name = "mva-core"
+description = "MVA Core Runtime: app state machine, config, commands, events, clock trait"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+mva-timeline = { path = "../mva-timeline" }
+serde.workspace = true
+toml.workspace = true
+thiserror.workspace = true

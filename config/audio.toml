@@ -1,0 +1,17 @@
+# Phase 1 — audio.toml
+# Consumed by mva-audio and mva-core::config::AudioConfig
+# Architecture §10 for list of configurable values per Agent.md rule.
+
+[playback]
+# Buffer size for rodio's audio sink in milliseconds.
+# Smaller = lower latency but more CPU overhead.
+buffer_size_ms = 50
+
+# Whether gapless track transition is enabled.
+# Phase 1: not implemented, but the config key is reserved.
+gapless_enabled = false
+
+[output]
+# Audio output device name exactly as reported by cpal.
+# Set to an empty string (or omit) to use the system default.
+device = ""

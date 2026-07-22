@@ -1,0 +1,11 @@
+# MVA Player — Application Configuration
+# See docs/architecture.md §10.
+
+[window]
+width = 1280
+height = 720
+
+[general]
+language = "en"
+last_directory = ""
+volume = 0.8

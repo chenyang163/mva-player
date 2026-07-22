@@ -1,0 +1,12 @@
+[package]
+name = "mva-types"
+description = "MVA Format Types — pure serde data model (leaf crate, no mva deps)"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+serde.workspace = true
+
+[dev-dependencies]
+serde_json.workspace = true

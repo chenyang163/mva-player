@@ -1,0 +1,11 @@
+# MVA Player — Animation Configuration
+# Default animation parameters for the Phase 1 lyric text layer
+# (architecture §10, §11).  The evaluator reads these to auto‑generate
+# opacity / scale keyframes on the default lyric layer.
+
+[lyric_layer]
+fade_in_duration = 0.4       # seconds
+fade_out_duration = 0.3      # seconds
+scale_from = 0.9
+scale_to = 1.0
+default_easing = "ease_out_cubic"

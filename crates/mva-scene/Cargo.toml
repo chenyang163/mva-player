@@ -1,0 +1,13 @@
+[package]
+name = "mva-scene"
+description = "MVA Scene IR: renderer-independent intermediate representation shared by timeline eval and renderer"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+mva-types = { path = "../mva-types" }
+serde.workspace = true
+
+[dev-dependencies]
+serde_json.workspace = true

@@ -1,0 +1,15 @@
+[package]
+name = "mva-ui"
+description = "MVA UI Layer: egui/eframe panels, painter adapter, MvaUiApp"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+mva-core = { path = "../mva-core" }
+mva-renderer = { path = "../mva-renderer" }
+mva-scene = { path = "../mva-scene" }
+mva-types = { path = "../mva-types" }
+image = "0.25"
+egui.workspace = true
+eframe.workspace = true

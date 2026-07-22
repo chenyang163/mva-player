@@ -1,0 +1,9 @@
+# MVA Player — Renderer Configuration
+# See docs/architecture.md §10.
+#
+# Phase 1.6: RendererConfig is empty — all runtime viewport dimensions
+# are passed per‑frame via the Viewport struct.
+# Future phases will add quality presets, AA samples, etc.
+
+[renderer]
+# future knobs here
