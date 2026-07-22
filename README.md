@@ -1,8 +1,41 @@
 # MVA Player
 
-A Rust-based media visual animation runtime — not just a player, but an extensible
-animation engine with timeline-driven effects, lyrics synchronization, image
-layering, and a configurable effects pipeline.
+[![CI](https://github.com/chenyang163/mva-player/actions/workflows/rust.yml/badge.svg)](https://github.com/chenyang163/mva-player/actions/workflows/rust.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Rust](https://img.shields.io/badge/rust-1.85%2B-orange.svg)](https://www.rust-lang.org)
+
+The **reference runtime implementation** of the MVA open media format — a
+timeline-driven animation engine with lyrics synchronization, image layering,
+effect pipeline, and a composable crate architecture.
+
+## Project Vision
+
+MVA is designed to be more than a file format — it aims to provide an
+**extensible media composition runtime** where:
+
+- Content is organized on **timelines**, not just encoded frames
+- Animation, text, images, and effects are **first-class primitives**
+- The **same pipeline** drives both playback and authoring
+- A **plugin ecosystem** extends capabilities without forking
+
+> This is an early-stage project. The format specification and APIs are
+> evolving and may change.
+
+## Why MVA?
+
+Existing media formats focus primarily on efficient encoding of audio/video
+streams. MVA explores a different space:
+
+| Conventional Formats | MVA |
+|----------------------|-----|
+| Video / audio encoding | Timeline-based composition |
+| Frame-level decoding | Keyframe-driven animation |
+| Fixed visual output | Real-time effect pipeline |
+| Passive playback | Extensible runtime |
+
+MVA does not compete with MP4, MKV, WebM, or Lottie — it addresses a different
+problem: how to represent, render, and interact with composited media
+presentations programmatically.
 
 ## Current Status
 
@@ -144,4 +177,4 @@ please contact the maintainer or open a [License Concern issue](CONTRIBUTING.md#
 
 ---
 
-*MVA Player — an extensible media visual animation runtime.*
+*MVA Player — the reference runtime for the MVA open media format.*
