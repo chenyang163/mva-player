@@ -47,14 +47,16 @@ Format:
 - Purpose: audio playback engine (decoding via Symphonia, transport via cpal/WASAPI)
 - Reason: approved by research §1. Pure Rust, built-in Symphonia decode chain for MP3/FLAC/WAV, `Player` for play/pause/stop/seek/position. Rodio 0.22+ API (`DeviceSinkBuilder` / `Player` / `Mixer`).
 
-## Dev dependencies
-
 ### serde_json
 - Repository: https://github.com/serde-rs/json
 - License: MIT OR Apache-2.0
-- Used by: `mva-timeline` (tests)
-- Purpose: JSON round-trip testing of the model contract
-- Reason: architecture §5, §6 define serialized artifacts as serde JSON (`*.anim.json`, `manifest.json`); `serde_json` is the canonical serde JSON backend. Dev-only until `mva-format` lands.
+- Used by: `mva-format` (`.mva` manifest + `*.anim.json` reading); `mva-timeline` (tests)
+- Purpose: canonical serde JSON backend for all serialized MVA artifacts
+- Reason: architecture §5, §6 define serialized artifacts as serde JSON (`*.anim.json`, `manifest.json`). Promoted from dev-only to a runtime dependency when `mva-format` gained the loose `.mva` manifest reader (Phase 4 start, first demo).
+
+## Dev dependencies
+
+(none beyond workspace-internal crates)
 
 ## Planned (not yet introduced)
 

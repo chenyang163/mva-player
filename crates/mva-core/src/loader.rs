@@ -17,6 +17,9 @@ pub enum ProjectLoadError {
     NoAudioFile,
     /// Lyrics file found but could not be parsed.
     InvalidLyrics(String),
+    /// A `.mva` manifest was found but could not be parsed or
+    /// references entries that cannot be loaded.
+    InvalidManifest(String),
     /// The path format is not supported (e.g. a `.docx` was opened).
     UnsupportedFormat(String),
     /// Catch‑all for otherwise‑unclassified errors.
