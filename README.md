@@ -118,6 +118,8 @@ cargo run -p mva-player -- --demo
 cargo run -p mva-player -- examples/lyric_demo/demo.mva
 ```
 
+![Lyric Demo](docs/images/lyric_demo.png)
+
 ![MVA Player Demo](docs/images/demo.png)
 
 ### Prerequisites
