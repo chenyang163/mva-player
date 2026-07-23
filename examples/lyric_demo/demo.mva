@@ -1,0 +1,15 @@
+{
+  "format_version": "1.0",
+  "generator": "mva-player 0.1.0",
+  "id": "mva-demo-lyric-001",
+  "metadata": {
+    "title": "Monkeys Spinning Monkeys",
+    "artist": "Kevin MacLeod",
+    "duration": 125.0
+  },
+  "entries": {
+    "audio": "assets/monkeys-spinning-monkeys.mp3",
+    "lyrics": ["lyrics.lrc"],
+    "animation": "assets/lyric.anim.json"
+  }
+}

@@ -95,6 +95,29 @@ fn missing_file_returns_decode_error() {
 }
 
 #[test]
+fn shared_handle_loads_real_file_and_plays() {
+    // Exercises the Phase 4 real-file path used by the player binary:
+    // SharedAudioPlayer::load_file() + transport through the handle.
+    let mp3 = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+        .join("../../examples/lyric_demo/assets/monkeys-spinning-monkeys.mp3");
+    let player = AudioPlayer::new().expect("open default audio device");
+    let shared = mva_audio::SharedAudioPlayer::new(player);
+
+    shared
+        .load_file(&mp3)
+        .expect("load demo mp3 through handle");
+    mva_core::audio::AudioController::apply(&shared, mva_core::effect::AudioCommand::Play)
+        .expect("play through handle");
+
+    std::thread::sleep(Duration::from_millis(200));
+    let pos = mva_core::PlaybackClock::position_seconds(&shared);
+    assert!(
+        pos > 0.01,
+        "position should advance while playing a real file, got {pos}"
+    );
+}
+
+#[test]
 fn play_without_source_returns_error() {
     let player = AudioPlayer::new().expect("open default audio device");
     let result = player.play();

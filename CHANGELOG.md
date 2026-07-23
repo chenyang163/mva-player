@@ -4,6 +4,31 @@ All notable changes to MVA Player are documented in this file.
 
 ---
 
+## Unreleased
+
+### MVA Format (Phase 4 start)
+- `mva-format`: loose `.mva` JSON manifest reader (architecture §6.2/§6.3) —
+  resolves audio/lyrics/animation entries relative to the manifest,
+  forward-tolerant parsing, refuses `format_version` majors ≥ 2
+- `mva-core`: new `ProjectLoadError::InvalidManifest` variant
+- `serde_json` promoted to a runtime dependency of `mva-format`
+  (as planned in `docs/dependencies.md`)
+
+### Real-file playback
+- `mva-audio`: `SharedAudioPlayer::load_file()` — load an audio file
+  through the shared handle (interior mutability for stream metadata)
+- `mva-player`: opening a project now loads its audio source into the
+  player — real music plays instead of only the startup sine wave
+
+### Demo
+- `examples/lyric_demo/`: first MVA showcase — real CC BY 4.0 music
+  (Kevin MacLeod), LRC lyric timeline, JSON animation timeline,
+  loose `demo.mva` manifest; covered by automated tests
+  (`crates/mva-player/tests/demo_showcase.rs`)
+- `docs/demo-assets.md`: asset provenance and license records
+
+---
+
 ## v0.1.0 — Initial Prototype
 
 **Released:** 2026-07-22

@@ -31,10 +31,15 @@ supports:
 - Image layers with transform keyframes
 - Effect timeline with parameter keyframes
 - Scene-based rendering pipeline
+- **Loose `.mva` JSON manifest reading** (experimental): a `.mva` file in
+  loose-project form is the §6.2-style JSON manifest referencing audio,
+  LRC lyrics, and an `*.anim.json` animation timeline by relative path.
+  Readers ignore unknown fields and refuse `format_version` majors ≥ 2.
+  See `examples/lyric_demo/demo.mva` for a working document.
 
 Planned for future specification versions:
 
-- `.mva` binary container format
+- `.mva` binary (ZIP) container format reusing the same manifest schema
 - Audio/video stream references
 - Plugin API contract
 - Metadata schema
