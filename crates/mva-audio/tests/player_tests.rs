@@ -16,7 +16,7 @@ use rodio::source::SineWave;
 use rodio::source::Source;
 
 fn make_player_with_sine() -> AudioPlayer {
-    let mut player = AudioPlayer::new().expect("open default audio device");
+    let player = AudioPlayer::new().expect("open default audio device");
     // 440 Hz sine wave, 5 seconds long, then truncate to avoid
     // sleeping in tests.
     let source = SineWave::new(440.0).take_duration(Duration::from_secs_f64(5.0));
@@ -26,7 +26,7 @@ fn make_player_with_sine() -> AudioPlayer {
 
 #[test]
 fn position_increases_during_playback() {
-    let mut player = make_player_with_sine();
+    let player = make_player_with_sine();
     player.play().unwrap();
 
     // Let the audio thread advance a few frames.
@@ -41,7 +41,7 @@ fn position_increases_during_playback() {
 
 #[test]
 fn pause_freezes_clock() {
-    let mut player = make_player_with_sine();
+    let player = make_player_with_sine();
     player.play().unwrap();
     std::thread::sleep(Duration::from_millis(100));
     player.pause().unwrap();
@@ -59,7 +59,7 @@ fn pause_freezes_clock() {
 
 #[test]
 fn pause_then_resume_continues_playback() {
-    let mut player = make_player_with_sine();
+    let player = make_player_with_sine();
     player.play().unwrap();
     std::thread::sleep(Duration::from_millis(100));
     player.pause().unwrap();
@@ -77,7 +77,7 @@ fn pause_then_resume_continues_playback() {
 
 #[test]
 fn stop_resets_position_to_zero() {
-    let mut player = make_player_with_sine();
+    let player = make_player_with_sine();
     player.play().unwrap();
     std::thread::sleep(Duration::from_millis(100));
     player.stop().unwrap();
@@ -89,21 +89,21 @@ fn stop_resets_position_to_zero() {
 
 #[test]
 fn missing_file_returns_decode_error() {
-    let mut player = AudioPlayer::new().expect("open default audio device");
+    let player = AudioPlayer::new().expect("open default audio device");
     let result = player.load_file("non_existent_audio_file.mp3");
     assert!(result.is_err(), "missing file should return an error");
 }
 
 #[test]
 fn play_without_source_returns_error() {
-    let mut player = AudioPlayer::new().expect("open default audio device");
+    let player = AudioPlayer::new().expect("open default audio device");
     let result = player.play();
     assert!(result.is_err(), "play without source should fail");
 }
 
 #[test]
 fn pause_while_stopped_returns_error() {
-    let mut player = make_player_with_sine();
+    let player = make_player_with_sine();
     let err = player.pause().unwrap_err();
     assert!(
         format!("{err}").contains("invalid state"),
@@ -113,7 +113,7 @@ fn pause_while_stopped_returns_error() {
 
 #[test]
 fn pause_while_already_paused_returns_error() {
-    let mut player = make_player_with_sine();
+    let player = make_player_with_sine();
     player.play().unwrap();
     player.pause().unwrap();
     let err = player.pause().unwrap_err();

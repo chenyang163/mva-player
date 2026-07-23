@@ -36,6 +36,8 @@ struct Inner {
     state: State,
     duration: f64,
     source_path: Option<PathBuf>,
+    sample_rate: u32,
+    channels: u16,
 }
 
 /// The audio playback engine.
@@ -43,8 +45,6 @@ pub struct AudioPlayer {
     _sink: MixerDeviceSink,
     player: Player,
     inner: Mutex<Inner>,
-    sample_rate: u32,
-    channels: u16,
 }
 
 impl AudioPlayer {
@@ -60,14 +60,18 @@ impl AudioPlayer {
                 state: State::Stopped,
                 duration: 0.0,
                 source_path: None,
+                sample_rate: 0,
+                channels: 0,
             }),
-            sample_rate: 0,
-            channels: 0,
         })
     }
 
     /// Load an audio file from disk.
-    pub fn load_file(&mut self, path: impl AsRef<Path>) -> Result<(), AudioError> {
+    ///
+    /// Takes `&self` (Mutex‑protected state) so a file can be loaded
+    /// through [`SharedAudioPlayer`] while it is shared as the
+    /// playback clock / controller (Phase 4 real‑file loading).
+    pub fn load_file(&self, path: impl AsRef<Path>) -> Result<(), AudioError> {
         let path = path.as_ref().to_owned();
         let file = File::open(&path)?;
         let source = Decoder::try_from(BufReader::new(file))
@@ -77,24 +81,26 @@ impl AudioPlayer {
             .total_duration()
             .map(|d| d.as_secs_f64())
             .unwrap_or(0.0);
-        self.sample_rate = source.sample_rate().get();
-        self.channels = source.channels().get();
+        let sample_rate = source.sample_rate().get();
+        let channels = source.channels().get();
 
         self.player.clear();
         self.player.append(source);
         self.player.pause();
 
-        let inner = self.inner.get_mut().unwrap();
+        let mut inner = self.inner.lock().unwrap();
         *inner = Inner {
             state: State::Stopped,
             duration: dur,
             source_path: Some(path),
+            sample_rate,
+            channels,
         };
         Ok(())
     }
 
     /// Load a rodio [`Source`] directly (in‑memory, no file).
-    pub fn load_source<S>(&mut self, source: S) -> Result<(), AudioError>
+    pub fn load_source<S>(&self, source: S) -> Result<(), AudioError>
     where
         S: Source + Send + 'static,
         <S as Iterator>::Item: Send + 'static,
@@ -103,31 +109,33 @@ impl AudioPlayer {
             .total_duration()
             .map(|d| d.as_secs_f64())
             .unwrap_or(0.0);
-        self.sample_rate = source.sample_rate().get();
-        self.channels = source.channels().get();
+        let sample_rate = source.sample_rate().get();
+        let channels = source.channels().get();
 
         self.player.clear();
         self.player.append(source);
         self.player.pause();
 
-        let inner = self.inner.get_mut().unwrap();
+        let mut inner = self.inner.lock().unwrap();
         *inner = Inner {
             state: State::Stopped,
             duration: dur,
             source_path: None,
+            sample_rate,
+            channels,
         };
         Ok(())
     }
 
     /// Start or resume playback.
-    pub fn play(&mut self) -> Result<(), AudioError> {
-        let inner = self.inner.get_mut().unwrap();
-        apply_play(&self.player, inner)
+    pub fn play(&self) -> Result<(), AudioError> {
+        let mut inner = self.inner.lock().unwrap();
+        apply_play(&self.player, &mut inner)
     }
 
     /// Pause playback.
-    pub fn pause(&mut self) -> Result<(), AudioError> {
-        let inner = self.inner.get_mut().unwrap();
+    pub fn pause(&self) -> Result<(), AudioError> {
+        let mut inner = self.inner.lock().unwrap();
         if inner.state != State::Playing {
             return Err(AudioError::InvalidState(format!(
                 "cannot pause while {:?}",
@@ -140,9 +148,9 @@ impl AudioPlayer {
     }
 
     /// Stop playback and clear the queue.
-    pub fn stop(&mut self) -> Result<(), AudioError> {
+    pub fn stop(&self) -> Result<(), AudioError> {
         self.player.stop();
-        self.inner.get_mut().unwrap().state = State::Stopped;
+        self.inner.lock().unwrap().state = State::Stopped;
         Ok(())
     }
 
@@ -158,12 +166,12 @@ impl AudioPlayer {
 
     /// Sample rate in Hz.
     pub fn sample_rate(&self) -> u32 {
-        self.sample_rate
+        self.inner.lock().unwrap().sample_rate
     }
 
     /// Number of audio channels.
     pub fn channels(&self) -> u16 {
-        self.channels
+        self.inner.lock().unwrap().channels
     }
 }
 
@@ -233,6 +241,17 @@ impl SharedAudioPlayer {
     /// Wrap an existing [`AudioPlayer`] in a shareable handle.
     pub fn new(inner: AudioPlayer) -> Self {
         Self(Arc::new(inner))
+    }
+
+    /// Load an audio file from disk through the shared handle.
+    ///
+    /// Used by the composition root when a newly opened [`Project`]
+    /// references an external audio file (Phase 4 real‑file loading).
+    /// Replaces any currently loaded source and leaves the transport
+    /// stopped — playback starts on the next
+    /// [`AudioCommand::Play`](mva_core::effect::AudioCommand::Play).
+    pub fn load_file(&self, path: impl AsRef<Path>) -> Result<(), AudioError> {
+        self.0.load_file(path)
     }
 }
 
