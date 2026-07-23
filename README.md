@@ -44,13 +44,13 @@ presentations programmatically.
 | Phase 1 — Workspace & Core Runtime |  Done | `mva-core`, `mva-audio`, `mva-renderer`, `mva-ui`, `mva-player` binary |
 | Phase 2 — Timeline & Lyrics |  Done | `mva-timeline` eval engine, `mva-lyrics` LRC parser, keyframe evaluation |
 | Phase 3 — Images & Effects |  Done | Image asset pipeline, effect timeline, effect draw pipeline, end-to-end demo |
-| Phase 4 — Project Loading & Format |   | Work in progress |
+| Phase 4 — Project Loading & Format |  Done | CLI + GUI project loading, native file dialog, `app.toml` configuration, autoplay |
 
-Phase 3 delivers:
-- **Text rendering** — font-backed lyric display with fade-in/out animation
-- **Image pipeline** — asset loading, layout, and compositing
-- **Effect pipeline** — keyframe-driven effect evaluation and GPU-ready draw commands
-- **Demo playback** — full end-to-end demo with synthetic project, audio, and visual output
+Phase 4 delivers:
+- **CLI & GUI project loading** — `mva-player file.mva` or File → Open
+- **Native file dialog** — Open File / Open Folder via OS file picker
+- **Configuration system** — `config/app.toml` with warning reporting in UI
+- **Autoplay** — configurable auto-play on project open
 
 ## Architecture
 

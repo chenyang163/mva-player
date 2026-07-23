@@ -2427,7 +2427,7 @@ dependencies = [
 
 [[package]]
 name = "mva-audio"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "mva-core",
  "rodio",
@@ -2436,7 +2436,7 @@ dependencies = [
 
 [[package]]
 name = "mva-core"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "mva-timeline",
  "serde",
@@ -2447,7 +2447,7 @@ dependencies = [
 
 [[package]]
 name = "mva-format"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "mva-core",
  "mva-lyrics",
@@ -2461,7 +2461,7 @@ dependencies = [
 
 [[package]]
 name = "mva-lyrics"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "lrc",
  "mva-types",
@@ -2470,7 +2470,7 @@ dependencies = [
 
 [[package]]
 name = "mva-player"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "clap",
  "eframe",
@@ -2488,7 +2488,7 @@ dependencies = [
 
 [[package]]
 name = "mva-renderer"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "mva-scene",
  "mva-types",
@@ -2498,7 +2498,7 @@ dependencies = [
 
 [[package]]
 name = "mva-scene"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "mva-types",
  "serde",
@@ -2507,7 +2507,7 @@ dependencies = [
 
 [[package]]
 name = "mva-timeline"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "mva-scene",
  "mva-types",
@@ -2518,7 +2518,7 @@ dependencies = [
 
 [[package]]
 name = "mva-types"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "serde",
  "serde_json",
@@ -2526,7 +2526,7 @@ dependencies = [
 
 [[package]]
 name = "mva-ui"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "eframe",
  "egui",

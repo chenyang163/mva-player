@@ -4,32 +4,42 @@ All notable changes to MVA Player are documented in this file.
 
 ---
 
-## Unreleased
+## [0.2.0]
 
-### MVA Format (Phase 4 start)
-- `mva-format`: loose `.mva` JSON manifest reader (architecture §6.2/§6.3) —
-  resolves audio/lyrics/animation entries relative to the manifest,
-  forward-tolerant parsing, refuses `format_version` majors ≥ 2
-- `mva-core`: new `ProjectLoadError::InvalidManifest` variant
-- `serde_json` promoted to a runtime dependency of `mva-format`
-  (as planned in `docs/dependencies.md`)
+### Added
 
-### Real-file playback
-- `mva-audio`: `SharedAudioPlayer::load_file()` — load an audio file
-  through the shared handle (interior mutability for stream metadata)
-- `mva-player`: opening a project now loads its audio source into the
-  player — real music plays instead of only the startup sine wave
+- Application startup workflow with three modes: Empty, Demo, OpenProject
+- CLI project loading (`mva-player <path>`) and `--demo` flag
+- GUI project loading via File → Open File / Open Folder
+- Native file dialog support (rfd)
+- Configuration system: `config/app.toml` loading with discovery (exe → cwd → default)
+- `autoplay_on_open` configuration option
+- Configuration warning reporting (UI panel + stderr)
+- `PlaybackError::Unknown` now carries human-readable error text from `ProjectLoadError::Display`
+- Known Limitation engine test: open-failure preserves old project and prevents Play
 
-### Demo
-- `examples/lyric_demo/`: first MVA showcase — real CC BY 4.0 music
-  (Kevin MacLeod), LRC lyric timeline, JSON animation timeline,
-  loose `demo.mva` manifest; covered by automated tests
-  (`crates/mva-player/tests/demo_showcase.rs`)
-- `docs/demo-assets.md`: asset provenance and license records
+### Improved
+
+- Startup architecture: `main.rs` reduced to thin composition root; startup logic in `startup.rs`
+- Unified project loading pipeline (`activate_project` with prepare/activate two-phase boundary)
+- UI panel organisation: dedicated menu bar, status bar with config warnings
+
+### Fixed
+
+- Fixed invisible File menu caused by egui panel ordering
+- Fixed invisible playback controls caused by panel layout conflict
+- Fixed invisible configuration warning area (status bar now uses `Panel::bottom`)
+
+### Known Limitations
+
+- Loose folder loading does not provide accurate duration metadata
+- Lyric discovery for loose folders depends on filename matching
+- File dialog opens synchronously while engine lock is held (accepted design)
+- Configuration is load-once at startup; no runtime reload
 
 ---
 
-## v0.1.0 — Initial Prototype
+## [0.1.0] — Initial Prototype
 
 **Released:** 2026-07-22
 

@@ -1,15 +1,15 @@
 # MVA Player — Project Status
 
-Date: 2026-07-23
+Date: 2026-07-24
 
 ## Overall
 
 | Metric | Value |
 |--------|-------|
-| **Version** | v0.1.0 |
-| **Phase** | Phase 4 In Progress (first showcase demo done) |
+| **Version** | v0.2.0 |
+| **Phase** | Phase 4 Complete |
 | **Architecture Score** | 9.5 / 10 |
-| **Tests** | All passing |
+| **Tests** | 190 passing |
 | **Clippy** | Clean |
 
 ## Phase Status
@@ -19,7 +19,7 @@ Date: 2026-07-23
 | Phase 1 — Workspace & Core |   Complete |
 | Phase 2 — Timeline & Lyrics |   Complete |
 | Phase 3 — Images & Effects |   Complete |
-| Phase 4 — Project Loading & Format |   In Progress |
+| Phase 4 — Application Workflow & Project Loading |   Complete |
 
 ## Architecture Health
 
@@ -39,28 +39,25 @@ Date: 2026-07-23
 |-------|-----------------|-------|
 | `mva-types` | ~300 | 8 |
 | `mva-timeline` | ~1200 | 69 |
-| `mva-core` | ~700 | 6 |
-| `mva-audio` | ~200 | 2 |
-| `mva-lyrics` | ~200 | 3 |
-| `mva-scene` | ~400 | 9 |
+| `mva-core` | ~1100 | 26 |
+| `mva-audio` | ~200 | 9 |
+| `mva-lyrics` | ~200 | 0 |
+| `mva-scene` | ~400 | 12 |
 | `mva-renderer` | ~350 | 15 |
-| `mva-ui` | ~550 | 0 (UI tested manually) |
-| `mva-format` | ~180 (+140 manifest) | 9 |
-| `mva-player` | ~160 | 6 |
+| `mva-ui` | ~600 | 0 (UI tested manually) |
+| `mva-format` | ~320 | 7 |
+| `mva-player` | ~350 | 8 |
 
-## Phase 4 Progress
+## Phase 4 Complete
 
-- Loose `.mva` JSON manifest reading in `mva-format` (architecture §6.2/§6.3)
-- Real-file playback wiring: opening a project loads its audio source
-  (`SharedAudioPlayer::load_file`)
-- First showcase demo: `examples/lyric_demo/` (CC BY 4.0 music, LRC
-  lyrics, JSON animation timeline) with automated verification
-
-## Next Steps (Phase 4)
-
-- `.mva` ZIP container read (manifest schema reused for `manifest.json`)
-- Audio duration probing so loose `mp3 + lrc` folders get a real duration
-- Project validation API (`mva-format::validate`)
+- CLI parsing with clap 4 (Empty / Demo / OpenProject modes)
+- Composition-root refactor: thin `main.rs`, `startup.rs` bootstrap + runtime services
+- Unified project loading: `activate_project` with prepare/activate two-phase boundary
+- Audio device failure graceful exit (error window + stderr + exit code 1)
+- `autoplay_on_open` configuration (file-driven after M4)
+- `config/app.toml` loading with dual-pass parsing and unknown-key warnings
+- Native file dialog: File → Open File / Open Folder
+- Configuration warning reporting in UI (status bar) + stderr
 
 ---
 
