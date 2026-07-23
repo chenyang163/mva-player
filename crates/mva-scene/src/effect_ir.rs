@@ -3,6 +3,9 @@
 use mva_types::{EffectTarget, ParamValue};
 
 /// A resolved effect at time `t`, ready for the renderer.
+///
+/// Produced by [`evaluate_effects`](mva_timeline::eval::evaluate_effects);
+/// consumed by the renderer's effect-to-DrawCommand pipeline.
 #[derive(Debug, Clone, PartialEq)]
 pub struct ActiveEffect {
     /// Effect identifier (e.g. `"bloom"`, `"spectrum"`).
