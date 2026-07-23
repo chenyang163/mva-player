@@ -1,8 +1,7 @@
-//! Phase 3 demo bootstrap — synthetic project exercising all
-//! Phase 3 data types (Text layer + Image layer + Effect).
+//! Built-in `--demo` showcase project (Phase 4).
 //!
-//! This is Phase 3 demo bootstrap code.
-//! It will be replaced by real project loading (Phase 4, `mva-format`).
+//! Synthetic project exercising all Phase 3 data types (Text layer +
+//! Image layer + Effect).  Accessed via `mva-player --demo`.
 
 use std::fs;
 use std::io::Write;

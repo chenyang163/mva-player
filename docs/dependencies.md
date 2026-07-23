@@ -58,6 +58,13 @@ Format:
 
 (none beyond workspace-internal crates)
 
+### clap
+- Repository: https://github.com/clap-rs/clap
+- License: MIT OR Apache-2.0
+- Used by: `mva-player` (binary crate only, not workspace-wide)
+- Purpose: CLI argument parsing (positional path, `--demo`, `--help`, `--version`) via derive macros
+- Reason: clap 4 is the de‑facto standard Rust CLI parser. The `derive` API produces a compact, type‑safe struct without manual matching. `PathBuf` value parsing uses `OsStr` internally, keeping Windows non‑UTF‑8 paths intact. A hand‑written parser was rejected per Rule 1 (research §4.2; `docs/phase4-architecture.md` §4.2).
+
 ## Planned (not yet introduced)
 
 | Crate | Approved by | Milestone | Purpose |

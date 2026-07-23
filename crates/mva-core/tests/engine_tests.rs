@@ -12,7 +12,7 @@ use mva_core::config::animation::AnimationConfig;
 use mva_core::config::app::AppConfig;
 use mva_core::effect::{AudioCommand, EngineEffect};
 use mva_core::engine::Engine;
-use mva_core::state::PlaybackState;
+use mva_core::state::{PlaybackError, PlaybackState};
 use mva_core::{EngineSnapshot, PlayerCommand};
 use mva_timeline::eval::EvaluatedLayerKind;
 use mva_timeline::model::*;
@@ -416,4 +416,38 @@ fn snapshot_is_deterministic() {
     eng.update_position(13.0);
     let c = eng.snapshot();
     assert_ne!(a, c);
+}
+
+// ---------------------------------------------------------------------------
+// Known Limitation §9.1 — open-failure semantics (M3)
+// ---------------------------------------------------------------------------
+
+#[test]
+fn open_failure_preserves_old_project_and_prevents_play() {
+    let mut eng = default_engine();
+
+    // Load project A and start playing
+    eng.handle_command(PlayerCommand::LoadProject(Box::new(sample_project())))
+        .unwrap();
+    eng.handle_command(PlayerCommand::Play).unwrap();
+    eng.update_position(5.0);
+
+    // Simulate "open project B failed": manually set Unknown error
+    let error_text = "I/O error: no recognised audio file found";
+    eng.set_error(PlaybackError::Unknown(error_text.into()));
+
+    let snap = eng.snapshot();
+    assert_eq!(snap.state, PlaybackState::Error);
+    assert!(snap.scene.is_some(), "project A scene still present");
+    assert_eq!(snap.error, Some(PlaybackError::Unknown(error_text.into())));
+
+    // Play is rejected while in Error state
+    let result = eng.handle_command(PlayerCommand::Play);
+    assert!(result.is_err(), "Play must be rejected in Error state");
+
+    // Stop clears error and returns to Stopped
+    eng.handle_command(PlayerCommand::Stop).unwrap();
+    let snap = eng.snapshot();
+    assert_eq!(snap.state, PlaybackState::Stopped);
+    assert!(snap.error.is_none());
 }

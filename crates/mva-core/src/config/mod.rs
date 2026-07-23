@@ -8,4 +8,5 @@
 pub mod animation;
 pub mod app;
 pub mod audio;
+pub mod loader;
 pub mod lyrics;

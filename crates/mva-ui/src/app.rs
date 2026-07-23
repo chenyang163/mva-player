@@ -19,6 +19,7 @@ pub struct MvaUiApp {
     open_path: String,
     texture_cache: TextureCache,
     on_effect: Box<dyn Fn(EngineEffect)>,
+    config_warnings: Vec<String>,
 }
 
 impl MvaUiApp {
@@ -28,6 +29,7 @@ impl MvaUiApp {
         clock: Box<dyn PlaybackClock>,
         renderer: Renderer,
         on_effect: Box<dyn Fn(EngineEffect)>,
+        config_warnings: Vec<String>,
     ) -> Self {
         Self {
             engine,
@@ -37,6 +39,7 @@ impl MvaUiApp {
             open_path: String::new(),
             texture_cache: TextureCache::new(),
             on_effect,
+            config_warnings,
         }
     }
 }
@@ -70,7 +73,13 @@ impl eframe::App for MvaUiApp {
             if snap.state == PlaybackState::Playing {
                 self.seek_pos = snap.position;
             }
-            panels::settings::show(ui, &mut commands, &snap, &mut self.open_path);
+            panels::settings::show(
+                ui,
+                &mut commands,
+                &snap,
+                &mut self.open_path,
+                &self.config_warnings,
+            );
 
             let mut all_effects = Vec::new();
             for cmd in commands {

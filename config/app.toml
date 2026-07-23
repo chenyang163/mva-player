@@ -9,3 +9,4 @@ height = 720
 language = "en"
 last_directory = ""
 volume = 0.8
+autoplay_on_open = true

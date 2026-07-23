@@ -15,12 +15,37 @@ use std::path::PathBuf;
 use mva_core::PlayerCommand;
 use mva_core::config::animation::AnimationConfig;
 use mva_core::config::app::AppConfig;
+use mva_core::effect::{AudioCommand, EngineEffect};
 use mva_core::engine::Engine;
 use mva_core::loader::ProjectLoader;
+use mva_core::state::PlaybackState;
 use mva_format::{LoaderConfig, MvaLoader};
 use mva_scene::EvaluatedLayerKind;
 use rodio::decoder::Decoder;
 use rodio::source::Source;
+
+#[test]
+fn demo_autoplay_pipeline_produces_play_effect() {
+    let project = load_demo_project();
+
+    let mut engine = Engine::new(AppConfig::default(), AnimationConfig::default());
+
+    // Step 1 — LoadProject
+    engine
+        .handle_command(PlayerCommand::LoadProject(Box::new(project)))
+        .unwrap();
+    assert_eq!(engine.snapshot().state, PlaybackState::Ready);
+
+    // Step 2 — Play (autoplay simulation)
+    let effects = engine.handle_command(PlayerCommand::Play).unwrap();
+
+    // Step 3 — Verify the chain: real project → Engine → Audio(Play) effect
+    assert_eq!(engine.snapshot().state, PlaybackState::Playing);
+    assert!(
+        effects.contains(&EngineEffect::Audio(AudioCommand::Play)),
+        "effects from Play must contain Audio(Play): {effects:?}"
+    );
+}
 
 fn demo_dir() -> PathBuf {
     PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../examples/lyric_demo")

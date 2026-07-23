@@ -21,6 +21,11 @@ pub struct WindowConfig {
     pub height: u32,
 }
 
+/// Serde helper: default for `autoplay_on_open`.
+fn default_true() -> bool {
+    true
+}
+
 /// General user preferences.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct GeneralConfig {
@@ -31,6 +36,11 @@ pub struct GeneralConfig {
     pub last_directory: String,
     /// Default playback volume `0.0–1.0`.
     pub volume: f32,
+    /// Automatically start playback when a project is opened
+    /// (CLI path or UI Open).  `--demo` is always auto‑play
+    /// regardless of this setting.
+    #[serde(default = "default_true")]
+    pub autoplay_on_open: bool,
 }
 
 impl AppConfig {
@@ -51,6 +61,7 @@ impl Default for AppConfig {
                 language: "en".into(),
                 last_directory: String::new(),
                 volume: 0.8,
+                autoplay_on_open: true,
             },
         }
     }

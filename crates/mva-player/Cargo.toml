@@ -14,6 +14,7 @@ mva-timeline = { path = "../mva-timeline" }
 mva-scene = { path = "../mva-scene" }
 mva-types = { path = "../mva-types" }
 mva-format = { path = "../mva-format" }
+clap = { version = "4", features = ["derive"] }
 rodio.workspace = true
 eframe.workspace = true
 egui.workspace = true
