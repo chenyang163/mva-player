@@ -104,11 +104,21 @@ mva-player        <- Binary shell (wiring only)
 - Plugin ecosystem (WASM / native effect plugins)
 - Cross-platform runtime verification (macOS, Linux, Windows)
 
-## Demo Screenshot
-
-> Screenshot will be added at `docs/images/demo.png`.
-
 ## Getting Started
+
+### Demo
+
+```bash
+# Built-in synthetic demo (no files required)
+cargo run -p mva-player -- --demo
+```
+
+```bash
+# Open a real project
+cargo run -p mva-player -- examples/lyric_demo/demo.mva
+```
+
+![MVA Player Demo](docs/images/demo.png)
 
 ### Prerequisites
 
