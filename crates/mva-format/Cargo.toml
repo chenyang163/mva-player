@@ -10,5 +10,7 @@ mva-core = { path = "../mva-core" }
 mva-types = { path = "../mva-types" }
 mva-timeline = { path = "../mva-timeline" }
 mva-lyrics = { path = "../mva-lyrics" }
+serde.workspace = true
+serde_json.workspace = true
 walkdir.workspace = true
 thiserror.workspace = true

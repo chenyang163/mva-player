@@ -44,3 +44,11 @@ Key architectural decisions (final):
 | 4 | — | MVA format v1 read |
 | 5 | — | Creator/Editor v1 + MVA format write + export |
 | 6+ | — | Plugin loaders (WASM/native), graph editor, online lyrics, `mva-types` extraction |
+
+## Phase 4 — Progress Log
+
+| Step | Status | Deliverable |
+|---|---|---|
+| **4.0-demo** | ✅ Done | First showcase demo: `examples/lyric_demo/` — loose `.mva` JSON manifest (architecture §6.2) referencing a real CC BY 4.0 MP3, `lyrics.lrc`, and `lyric.anim.json`; `mva-format` reads the manifest (forward-tolerant, refuses format majors ≥ 2); the player binary loads the project's audio source on open (`SharedAudioPlayer::load_file`). Verified by `crates/mva-player/tests/demo_showcase.rs` + `crates/mva-format/tests/manifest_tests.rs`. |
+| 4.1 | ⬜ Planned | `.mva` ZIP container read (same manifest schema as `manifest.json` entry) |
+| 4.2 | ⬜ Planned | Audio duration probing for loose-folder projects (currently duration comes from the manifest metadata) |

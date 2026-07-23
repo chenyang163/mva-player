@@ -1,13 +1,13 @@
 # MVA Player — Project Status
 
-Date: 2026-07-22
+Date: 2026-07-23
 
 ## Overall
 
 | Metric | Value |
 |--------|-------|
 | **Version** | v0.1.0 |
-| **Phase** | Phase 3 Completed |
+| **Phase** | Phase 4 In Progress (first showcase demo done) |
 | **Architecture Score** | 9.5 / 10 |
 | **Tests** | All passing |
 | **Clippy** | Clean |
@@ -45,16 +45,22 @@ Date: 2026-07-22
 | `mva-scene` | ~400 | 9 |
 | `mva-renderer` | ~350 | 15 |
 | `mva-ui` | ~550 | 0 (UI tested manually) |
-| `mva-format` | ~180 | 2 |
-| `mva-player` | ~150 | 3 |
+| `mva-format` | ~180 (+140 manifest) | 9 |
+| `mva-player` | ~160 | 6 |
+
+## Phase 4 Progress
+
+- Loose `.mva` JSON manifest reading in `mva-format` (architecture §6.2/§6.3)
+- Real-file playback wiring: opening a project loads its audio source
+  (`SharedAudioPlayer::load_file`)
+- First showcase demo: `examples/lyric_demo/` (CC BY 4.0 music, LRC
+  lyrics, JSON animation timeline) with automated verification
 
 ## Next Steps (Phase 4)
 
-- `ProjectLoader` trait finalization in `mva-core`
-- `mva-format` loose file project loading
-- `PlaybackState` 7-state extension
-- `EngineEffect` output model
-- Real file integration testing
+- `.mva` ZIP container read (manifest schema reused for `manifest.json`)
+- Audio duration probing so loose `mp3 + lrc` folders get a real duration
+- Project validation API (`mva-format::validate`)
 
 ---
 

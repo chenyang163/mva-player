@@ -6,5 +6,7 @@
 #![forbid(unsafe_code)]
 
 mod loader;
+mod manifest;
 
 pub use loader::{LoaderConfig, MvaLoader};
+pub use manifest::{ManifestEntries, ManifestMetadata, MvaManifest};

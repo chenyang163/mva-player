@@ -59,6 +59,9 @@ pub struct EffectParam {
 }
 
 /// A value that an effect parameter can take.
+///
+/// Tagged serde encoding produces e.g.
+/// `{"type":"float","value":0.5}`.
 #[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum ParamValue {

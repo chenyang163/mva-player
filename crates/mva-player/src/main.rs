@@ -27,7 +27,7 @@ fn main() {
     let rend_cfg = RendererConfig::default();
 
     // --- audio (sine wave demo source) ---
-    let mut audio_player = AudioPlayer::new().expect("open default audio device");
+    let audio_player = AudioPlayer::new().expect("open default audio device");
     audio_player.set_volume(app_cfg.general.volume);
     audio_player
         .load_source(demo::make_demo_sine())
@@ -74,6 +74,18 @@ fn main() {
         }
         EngineEffect::LoadProject { path } => match loader_clone.load(&path) {
             Ok(project) => {
+                use mva_core::state::PlaybackError;
+                // Real-file playback: load the project's audio source
+                // into the player before the project goes live.
+                if let mva_timeline::model::AudioSource::ExternalFile { path } =
+                    &project.audio.source
+                {
+                    if let Err(_e) = ac.load_file(path) {
+                        let mut eng = engine_clone.lock().unwrap();
+                        eng.set_error(PlaybackError::DecodeFailed);
+                        return;
+                    }
+                }
                 let mut eng = engine_clone.lock().unwrap();
                 let _ = eng.handle_command(PlayerCommand::LoadProject(Box::new(project)));
             }

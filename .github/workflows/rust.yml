@@ -20,7 +20,19 @@ jobs:
       - name: Install Linux system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y pkg-config libasound2-dev
+          sudo apt-get install -y pkg-config libasound2-dev libasound2-plugins
+
+      - name: Configure virtual ALSA output
+        run: |
+          mkdir -p ~/.config/alsa
+          cat > ~/.asoundrc << 'ASOUNDRC'
+          pcm.!default {
+              type null
+          }
+          ctl.!default {
+              type null
+          }
+          ASOUNDRC
 
       - name: Install Rust toolchain (stable)
         uses: dtolnay/rust-toolchain@stable

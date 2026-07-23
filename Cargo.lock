@@ -2287,6 +2287,8 @@ dependencies = [
  "mva-lyrics",
  "mva-timeline",
  "mva-types",
+ "serde",
+ "serde_json",
  "thiserror 2.0.19",
  "walkdir",
 ]

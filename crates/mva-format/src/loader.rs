@@ -10,6 +10,8 @@ use mva_timeline::model::{
 };
 use mva_types::{EffectTimeline, LyricTimeline};
 
+use crate::manifest::load_manifest;
+
 /// Configuration for [`MvaLoader`] (Phase 2 — defaults only).
 #[derive(Debug, Clone, Default)]
 pub struct LoaderConfig {}
@@ -41,7 +43,7 @@ impl ProjectLoader for MvaLoader {
     }
 
     fn supported_extensions(&self) -> &[&str] {
-        &["mp3", "flac", "wav", "lrc"]
+        &["mva", "mp3", "flac", "wav", "lrc"]
     }
 }
 
@@ -72,9 +74,14 @@ impl MvaLoader {
             .unwrap_or("")
             .to_lowercase();
 
+        // A `.mva` file is a loose JSON manifest (architecture §6.2).
+        if ext == "mva" {
+            return load_manifest(file);
+        }
+
         if !matches!(ext.as_str(), "mp3" | "flac" | "wav") {
             return Err(ProjectLoadError::UnsupportedFormat(format!(
-                ".{ext} — expected mp3, flac, or wav"
+                ".{ext} — expected mva, mp3, flac, or wav"
             )));
         }
 
