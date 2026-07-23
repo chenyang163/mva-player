@@ -67,19 +67,14 @@ impl eframe::App for MvaUiApp {
 
             let mut commands = Vec::new();
 
+            panels::settings::menu_bar(ui, &mut commands, &mut self.open_path);
             panels::info::show(ui, &snap);
-            panels::viewport::show(ui, &mut self.texture_cache, &draw_list);
             panels::controls::show(ui, &snap, &mut self.seek_pos, &mut commands);
             if snap.state == PlaybackState::Playing {
                 self.seek_pos = snap.position;
             }
-            panels::settings::show(
-                ui,
-                &mut commands,
-                &snap,
-                &mut self.open_path,
-                &self.config_warnings,
-            );
+            panels::settings::status_bar(ui, &snap, &self.config_warnings);
+            panels::viewport::show(ui, &mut self.texture_cache, &draw_list);
 
             let mut all_effects = Vec::new();
             for cmd in commands {

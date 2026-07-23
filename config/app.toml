@@ -4,6 +4,7 @@
 [window]
 width = 1280
 height = 720
+unknown_test = true
 
 [general]
 language = "en"

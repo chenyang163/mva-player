@@ -1,4 +1,4 @@
-//! Settings panel — "Open File" + version info.
+//! Settings panel — File menu + status bar.
 
 use std::path::PathBuf;
 
@@ -6,13 +6,8 @@ use egui::containers::panel::Panel;
 use mva_core::PlayerCommand;
 use mva_core::state::EngineSnapshot;
 
-pub fn show(
-    ui: &mut egui::Ui,
-    commands: &mut Vec<PlayerCommand>,
-    snap: &EngineSnapshot,
-    path_buf: &mut String,
-    config_warnings: &[String],
-) {
+/// Top menu bar with File (native open dialogs), Help, and a text path input.
+pub fn menu_bar(ui: &mut egui::Ui, commands: &mut Vec<PlayerCommand>, path_buf: &mut String) {
     Panel::top("menu_bar").show(ui, |ui| {
         ui.horizontal(|ui| {
             ui.menu_button("File", |ui| {
@@ -59,8 +54,12 @@ pub fn show(
                 }
             }
         });
+    });
+}
 
-        // Show current state hint.
+/// Bottom status bar — state hint and config warnings (display only, no commands).
+pub fn status_bar(ui: &mut egui::Ui, snap: &EngineSnapshot, config_warnings: &[String]) {
+    Panel::bottom("status_bar").show(ui, |ui| {
         use mva_core::state::PlaybackState;
         match snap.state {
             PlaybackState::Stopped => {
@@ -78,7 +77,6 @@ pub fn show(
             _ => {}
         }
 
-        // Config warnings (visible for the whole session).
         if !config_warnings.is_empty() {
             ui.separator();
             ui.colored_label(
